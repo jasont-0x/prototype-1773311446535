@@ -1,0 +1,52 @@
+{% extends "govuk/template.njk" %}
+
+{% block pageTitle %}{{ 'Error: ' if errors and errors['receive-benefits'] }}Do you receive any qualifying benefits? – {{ serviceName }} – GOV.UK{% endblock %}
+
+{% block header %}
+  {{ govukHeader({
+    homepageUrl: "https://www.gov.uk",
+    serviceName: serviceName,
+    serviceUrl: "/"
+  }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    {% if errors and errors['receive-benefits'] %}
+      {{ govukErrorSummary({
+        titleText: "There is a problem",
+        errorList: [{ text: errors['receive-benefits'], href: "#receive-benefits" }]
+      }) }}
+    {% endif %}
+
+    <form method="post" novalidate>
+      <input type="hidden" name="_csrf" value="{{ csrf }}">
+
+    {{ govukRadios({
+      name: "receive-benefits",
+      fieldset: {
+        legend: {
+          text: "Do you receive any qualifying benefits?",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      hint: { text: "This includes Income Support, Jobseeker's Allowance, Employment and Support Allowance, Universal Credit, Child Tax Credit or Working Tax Credit" },
+      errorMessage: errors and errors['receive-benefits'] and { text: errors['receive-benefits'] },
+      value: data['receive-benefits'],
+      items: [
+        { value: "yes", text: "Yes" },
+        { value: "no", text: "No" }
+      ]
+    }) }}
+
+      {{ govukButton({ text: "Continue" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
