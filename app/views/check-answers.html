@@ -1,0 +1,68 @@
+{% extends "govuk/template.njk" %}
+
+{% block pageTitle %}Check your answers before sending – {{ serviceName }} – GOV.UK{% endblock %}
+
+{% block header %}
+  {{ govukHeader({
+    homepageUrl: "https://www.gov.uk",
+    serviceName: serviceName,
+    serviceUrl: "/"
+  }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    <h1 class="govuk-heading-xl">Check your answers before sending</h1>
+
+    {{ govukSummaryList({
+      rows: [
+      {
+        key: { text: "Is your child of school age (4 to 16 years old)?" },
+        value: { text: data['child-school-age'] or "Not provided" },
+        actions: {
+          items: [{ href: "/child-school-age", text: "Change", visuallyHiddenText: "is your child of school age (4 to 16 years old)?" }]
+        }
+      },
+      {
+        key: { text: "What is your child's full name?" },
+        value: { text: data['child-name'] or "Not provided" },
+        actions: {
+          items: [{ href: "/child-name", text: "Change", visuallyHiddenText: "what is your child's full name?" }]
+        }
+      },
+      {
+        key: { text: "What is your child's date of birth?" },
+        value: { text: data['child-date-of-birth'] or "Not provided" },
+        actions: {
+          items: [{ href: "/child-date-of-birth", text: "Change", visuallyHiddenText: "what is your child's date of birth?" }]
+        }
+      },
+      {
+        key: { text: "What is your National Insurance number?" },
+        value: { text: data['parent-national-insurance'] or "Not provided" },
+        actions: {
+          items: [{ href: "/parent-national-insurance", text: "Change", visuallyHiddenText: "what is your national insurance number?" }]
+        }
+      },
+      {
+        key: { text: "Do you receive any qualifying benefits?" },
+        value: { text: data['receive-benefits'] or "Not provided" },
+        actions: {
+          items: [{ href: "/receive-benefits", text: "Change", visuallyHiddenText: "do you receive any qualifying benefits?" }]
+        }
+      }
+      ]
+    }) }}
+
+    <form method="post" novalidate>
+      <input type="hidden" name="_csrf" value="{{ csrf }}">
+      {{ govukButton({ text: "Confirm and send" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
