@@ -1,0 +1,35 @@
+{% extends "govuk/template.njk" %}
+
+{% block pageTitle %}Application submitted – {{ serviceName }} – GOV.UK{% endblock %}
+
+{% block header %}
+  {{ govukHeader({
+    homepageUrl: "https://www.gov.uk",
+    serviceName: serviceName,
+    serviceUrl: "/"
+  }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h1 class="govuk-panel__title">Application submitted</h1>
+      <div class="govuk-panel__body">
+        Your reference number<br>
+        <strong>{{ data['reference'] }}</strong>
+      </div>
+    </div>
+
+    <h2 class="govuk-heading-m">What happens next</h2>
+    <p class="govuk-body">We have received your application for free school meals and will check if you are eligible.</p>
+    <p class="govuk-body">We will contact you within 10 working days with our decision.</p>
+
+    <p class="govuk-body">
+      <a href="/" class="govuk-link">Start a new application</a>
+    </p>
+
+  </div>
+</div>
+{% endblock %}
