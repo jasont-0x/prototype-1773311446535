@@ -1,0 +1,47 @@
+{% extends "govuk/template.njk" %}
+
+{% block pageTitle %}{{ 'Error: ' if errors and errors['child-name'] }}What is your child's full name? – {{ serviceName }} – GOV.UK{% endblock %}
+
+{% block header %}
+  {{ govukHeader({
+    homepageUrl: "https://www.gov.uk",
+    serviceName: serviceName,
+    serviceUrl: "/"
+  }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    {% if errors and errors['child-name'] %}
+      {{ govukErrorSummary({
+        titleText: "There is a problem",
+        errorList: [{ text: errors['child-name'], href: "#child-name" }]
+      }) }}
+    {% endif %}
+
+    <form method="post" novalidate>
+      <input type="hidden" name="_csrf" value="{{ csrf }}">
+
+    {{ govukInput({
+      id: "child-name",
+      name: "child-name",
+      label: {
+        text: "What is your child's full name?",
+        isPageHeading: true,
+        classes: "govuk-label--l"
+      },
+      hint: { text: "Include their first name and last name" },
+      errorMessage: errors and errors['child-name'] and { text: errors['child-name'] },
+      value: data['child-name']
+    }) }}
+
+      {{ govukButton({ text: "Continue" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
