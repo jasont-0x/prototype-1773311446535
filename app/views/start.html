@@ -1,0 +1,35 @@
+{% extends "govuk/template.njk" %}
+
+{% block pageTitle %}{{ serviceName }} – GOV.UK{% endblock %}
+
+{% block header %}
+  {{ govukHeader({
+    homepageUrl: "https://www.gov.uk",
+    serviceName: serviceName,
+    serviceUrl: "/"
+  }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">Apply for free school meals</h1>
+    <p class="govuk-body">Use this service to apply for free school meals for your child.</p>
+
+    <p class="govuk-body">Use this service to:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>your child's details</li>
+      <li>your National Insurance number</li>
+      <li>details of any benefits you receive</li>
+    </ul>
+
+    <p class="govuk-body">It takes around <strong>5 minutes</strong> to complete.</p>
+
+    {{ govukButton({
+      text: "Start now",
+      href: "/child-school-age",
+      isStartButton: true
+    }) }}
+  </div>
+</div>
+{% endblock %}
